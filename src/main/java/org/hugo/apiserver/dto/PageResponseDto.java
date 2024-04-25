@@ -46,5 +46,9 @@ public class PageResponseDto<E> { // 내려가는 값들이 조금씩 다르기 
         this.prevPage = prev ? start - 1 : 0;
 
         this.nextPage = next ? end + 1 : 0;
+
+        this.totalPage = this.pageNumList.size();
+
+        this.current = pageRequestDto.getPage();
     }
 }
