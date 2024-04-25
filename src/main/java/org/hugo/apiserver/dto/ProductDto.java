@@ -25,9 +25,10 @@ public class ProductDto {
 
     private boolean delFlag;
 
-    @Builder.Default
+    // 한 엔티티에 여러가지 요청에 사용가능한 필드값을 정의하여 사용하는 것도 좋은 방법인듯?
+    @Builder.Default // 업로드시 사용 - 진짜 사진 파일
     private List<MultipartFile> files = new ArrayList<>();
 
-    @Builder.Default
+    @Builder.Default // 데이터 내려줄때 DB에서 꺼내온 값
     private List<String> uploadFileNames = new ArrayList<>();
 }
