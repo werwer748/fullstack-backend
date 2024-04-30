@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    @Override
+    public void remove(Long pno) {
+        productRepository.deleteById(pno);
+    }
 
     private final ProductRepository productRepository;
 
@@ -86,8 +90,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void modify() {
-        
+    public void modify(ProductDto productDto) {
+        // 조회하고
+        Optional<Product> result = productRepository.findById(productDto.getPno());
+
+        Product product = result.orElseThrow();
+        // 변경 내용 반영하고
+        product.changePrice(productDto.getPrice());
+        product.changeName(productDto.getPname());
+        product.changeDesc(productDto.getPdesc());
+        product.changeDel(product.isDelFlag());
+
+        // 이미지 처리
+        List<String> uploadFileNames = productDto.getUploadFileNames();
+
+        product.clearList();
+
+        if (uploadFileNames != null && !uploadFileNames.isEmpty()) {
+//            uploadFileNames.forEach(uploadName -> {
+//                product.addImageString(uploadName);
+//            });
+            uploadFileNames.forEach(product::addImageString);
+        }
+
+        // 저장
+        productRepository.save(product);
     }
 
     private ProductDto entityToDto(Product product) {

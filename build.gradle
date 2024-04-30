@@ -54,6 +54,18 @@ dependencies {
 
     // https://mvnrepository.com/artifact/net.coobird/thumbnailator
     implementation 'net.coobird:thumbnailator:0.4.19'
+
+    // spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    // 시큐리티를 통해 들어온 유저정보를 json으로 변환하기 위해 사용
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // jwt 생성 라이브러리(최신버전은 아닌데 이건 나중에 따로 해보자)
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {
