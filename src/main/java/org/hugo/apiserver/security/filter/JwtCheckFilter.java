@@ -27,6 +27,10 @@ import java.util.Map;
 public class JwtCheckFilter extends OncePerRequestFilter {
     @Override // 검사를 안해도 되는 경우를 지정하기위해 사용
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // Preflight요청은 체크하지 않음
+        if(request.getMethod().equals("OPTIONS")){
+            return true;
+        }
 
         String path = request.getRequestURI();
         log.info("check uri = " + path);
@@ -34,6 +38,12 @@ public class JwtCheckFilter extends OncePerRequestFilter {
         if (path.startsWith("/api/member")) {
             return true;
         };
+
+        //이미지 조회 경로는 체크하지 않음
+        if(path.startsWith("/api/products/view/")) {
+            return true;
+        }
+
 
         // 체크하는거 return false
         return false;
